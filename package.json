@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:setup": "node -e \"console.log('Run the SQL in sql/schema.sql against your Neon database')\""
+    "db:setup": "node scripts/setup-neon.cjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
     "framer-motion": "^11.18.2",
     "next": "14.2.18",
+    "pg": "^8.23.0",
     "posthog-js": "^1.435.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

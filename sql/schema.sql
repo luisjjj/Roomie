@@ -1,5 +1,8 @@
 -- Roomie waitlist schema (Neon Postgres)
--- Run this once in your Neon SQL editor.
+-- Run this once in your Neon SQL editor, or via `npm run db:setup`.
+
+create extension if not exists "pgcrypto";
+create extension if not exists citext;
 
 create table if not exists waitlist (
   id uuid primary key default gen_random_uuid(),
