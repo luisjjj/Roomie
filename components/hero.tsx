@@ -131,14 +131,7 @@ export function Hero() {
   return (
     <section id="top" className="pt-32 sm:pt-40">
       <div className="mx-auto max-w-5xl px-5 text-center">
-        <a
-          href="#students"
-          className="inline-flex items-center gap-2 rounded-full border border-hairline bg-white px-3.5 py-1.5 text-[13px] text-ink/70 transition hover:border-ink/25"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-          Built for Nigeria — starting with campuses
-        </a>
-        <h1 className="mx-auto mt-6 max-w-3xl text-[40px] font-semibold leading-[1.04] tracking-[-0.035em] sm:text-[64px]">
+        <h1 className="mx-auto max-w-3xl text-[40px] font-semibold leading-[1.04] tracking-[-0.035em] sm:text-[64px]">
           Find someone you&apos;ll actually enjoy living with.
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-[16.5px] leading-relaxed text-muted sm:text-[18px]">
