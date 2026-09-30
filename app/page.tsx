@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { MotionConfig } from "framer-motion";
 import { Nav, Footer } from "@/components/chrome";
 import { Hero, ProofStrip } from "@/components/hero";
 import { Problem, HowItWorks, University, StudentLife } from "@/components/sections1";
@@ -32,7 +33,8 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white text-ink">
+    <MotionConfig reducedMotion="user">
+      <main className="min-h-screen bg-white text-ink">
       <Nav />
       <Hero />
       <ProofStrip />
@@ -48,6 +50,7 @@ export default function Page() {
       <Network />
       <Waitlist />
       <Footer />
-    </main>
+      </main>
+    </MotionConfig>
   );
 }

@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BedDouble,
   Building2,
-  Check,
   GraduationCap,
   Home,
+  Loader2,
   MapPin,
   Share2,
 } from "lucide-react";
-import { Eyebrow, Reveal } from "./ui";
+import { Eyebrow, FloatCard, Reveal } from "./ui";
 import { track } from "@/lib/analytics";
 
 const listings = [
@@ -37,19 +37,21 @@ export function Marketplace() {
         <div className="mt-12 grid gap-3 md:grid-cols-3">
           {listings.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.06}>
-              <div className="relative h-full rounded-2xl border border-hairline bg-white p-6">
-                <span className="absolute right-5 top-5 rounded-full bg-ink px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.1em] text-white">
-                  Coming later
-                </span>
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink/[0.04]">
-                  <c.icon size={19} strokeWidth={1.8} />
-                </span>
-                <p className="mt-4 font-semibold">{c.title}</p>
-                <p className="mt-1 flex items-center gap-1.5 text-[13.5px] text-muted">
-                  <MapPin size={13} /> {c.loc} · {c.price}
-                </p>
-                <p className="mt-1 text-[13px] font-medium">{c.note}</p>
-              </div>
+              <FloatCard className="h-full transition-shadow duration-300 hover:shadow-frame">
+                <div className="relative h-full rounded-2xl border border-hairline bg-white p-6">
+                  <span className="absolute right-5 top-5 rounded-full bg-ink px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.1em] text-white">
+                    Coming later
+                  </span>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink/[0.04]">
+                    <c.icon size={19} strokeWidth={1.8} />
+                  </span>
+                  <p className="mt-4 font-semibold">{c.title}</p>
+                  <p className="mt-1 flex items-center gap-1.5 text-[13.5px] text-muted">
+                    <MapPin size={13} /> {c.loc} · {c.price}
+                  </p>
+                  <p className="mt-1 text-[13px] font-medium">{c.note}</p>
+                </div>
+              </FloatCard>
             </Reveal>
           ))}
         </div>
@@ -135,29 +137,59 @@ function Pill({
   selected,
   onClick,
   children,
+  group,
 }: {
   selected: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  group: string;
 }) {
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
-      className={`rounded-full border px-4 py-2 text-[13.5px] font-medium transition ${
+      whileTap={{ scale: 0.95 }}
+      className={`relative rounded-full border px-4 py-2 text-[13.5px] font-medium transition-colors ${
         selected
-          ? "border-ink bg-ink text-white"
+          ? "border-ink text-white"
           : "border-hairline bg-white text-ink/70 hover:border-ink/40 hover:text-ink"
       }`}
     >
-      {children}
-    </button>
+      {selected && (
+        <motion.span
+          layoutId={group}
+          className="absolute inset-0 rounded-full bg-ink"
+          transition={{ type: "spring", stiffness: 420, damping: 33 }}
+        />
+      )}
+      <span className="relative z-10">{children}</span>
+    </motion.button>
   );
 }
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return <p className="mb-2.5 text-[13.5px] font-medium">{children}</p>;
 }
+
+const formVariants: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+};
+
+const fieldVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const successVariants: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
+};
+
+const successItem: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+};
 
 export function Waitlist() {
   const [form, setForm] = useState({
@@ -186,6 +218,18 @@ export function Waitlist() {
     }
     setForm((f) => ({ ...f, [k]: v }));
   };
+
+  const isStudent = form.userType === "student";
+  const stepsDone = [
+    form.name.trim().length >= 2 &&
+      /.+@.+\..+/.test(form.email.trim()) &&
+      form.phone.trim().length >= 7,
+    !!form.userType,
+    isStudent ? !!form.university.trim() : form.userType ? !!form.city.trim() : false,
+    !!form.intent,
+    !!form.budget,
+    !!form.moveInTiming,
+  ].filter(Boolean).length;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -236,42 +280,67 @@ export function Waitlist() {
     }
   };
 
-  const isStudent = form.userType === "student";
-
   return (
     <section id="waitlist" className="bg-ink py-24 text-white sm:py-32">
       <div className="mx-auto max-w-2xl px-5">
         {status === "success" ? (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            animate="show"
+            variants={successVariants}
             className="rounded-3xl bg-white p-8 text-center text-ink sm:p-10"
           >
-            <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-ink text-white">
-              <Check size={22} strokeWidth={2.5} />
-            </span>
-            <h2 className="mt-5 text-[30px] font-semibold tracking-[-0.02em]">
+            <motion.div
+              variants={successItem}
+              className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-ink"
+            >
+              <motion.svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <motion.path
+                  d="M5 13.5l5.5 5.5L21 8.5"
+                  stroke="#fff"
+                  strokeWidth={2.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                />
+              </motion.svg>
+            </motion.div>
+            <motion.h2
+              variants={successItem}
+              className="mt-5 text-[30px] font-semibold tracking-[-0.02em]"
+            >
               You&apos;re on the list.
-            </h2>
-            <p className="mt-2 text-muted">We&apos;ll let you know when Roomie is ready in your area.</p>
+            </motion.h2>
+            <motion.p variants={successItem} className="mt-2 text-muted">
+              We&apos;ll let you know when Roomie is ready in your area.
+            </motion.p>
             {code && (
-              <p className="mx-auto mt-5 inline-block rounded-full bg-wash px-4 py-2 font-mono text-[13px]">
+              <motion.p
+                variants={successItem}
+                className="mx-auto mt-5 inline-block rounded-full bg-wash px-4 py-2 font-mono text-[13px]"
+              >
                 Your code: <span className="font-semibold">{code}</span>
-              </p>
+              </motion.p>
             )}
-            <div className="mt-6 rounded-2xl border border-hairline p-6 text-left">
+            <motion.div
+              variants={successItem}
+              className="mt-6 rounded-2xl border border-hairline p-6 text-left"
+            >
               <p className="font-semibold">Know someone looking for a roommate?</p>
               <p className="mt-1 text-[14px] text-muted">
                 Send them Roomie before they end up living with somebody&apos;s cousin&apos;s
                 roommate&apos;s neighbor.
               </p>
-              <button
+              <motion.button
                 onClick={share}
+                whileTap={{ scale: 0.97 }}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-[15px] font-medium text-white transition hover:bg-ink/85"
               >
                 <Share2 size={16} /> Share Roomie
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </motion.div>
         ) : (
           <>
@@ -287,95 +356,147 @@ export function Waitlist() {
               </p>
             </Reveal>
             <Reveal className="mt-10 rounded-3xl bg-white p-6 text-ink sm:p-9">
-              <form onSubmit={submit} className="space-y-6">
-                <div className="grid gap-3 sm:grid-cols-2">
+              <div className="mb-7">
+                <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                  <span>Your details</span>
+                  <span>{stepsDone} of 6 complete</span>
+                </div>
+                <div className="mt-2 h-1 overflow-hidden rounded-full bg-wash">
+                  <motion.div
+                    className="h-full rounded-full bg-ink"
+                    initial={false}
+                    animate={{ width: `${(stepsDone / 6) * 100}%` }}
+                    transition={{ type: "spring", stiffness: 140, damping: 22 }}
+                  />
+                </div>
+              </div>
+              <motion.form
+                onSubmit={submit}
+                variants={formVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-40px" }}
+                className="space-y-6"
+              >
+                <motion.div variants={fieldVariants} className="grid gap-3 sm:grid-cols-2">
                   <input className={inputCls} placeholder="Full name" value={form.name} onChange={(e) => set("name", e.target.value)} required minLength={2} />
                   <input className={inputCls} placeholder="Email" type="email" value={form.email} onChange={(e) => set("email", e.target.value)} required />
-                </div>
-                <input className={inputCls} placeholder="Phone number (e.g. 0803...)" value={form.phone} onChange={(e) => set("phone", e.target.value)} required inputMode="tel" />
+                </motion.div>
+                <motion.input
+                  variants={fieldVariants}
+                  className={inputCls}
+                  placeholder="Phone number (e.g. 0803...)"
+                  value={form.phone}
+                  onChange={(e) => set("phone", e.target.value)}
+                  required
+                  inputMode="tel"
+                />
 
-                <div>
+                <motion.div variants={fieldVariants}>
                   <FieldLabel>What describes you?</FieldLabel>
                   <div className="flex flex-wrap gap-2">
                     {USER_TYPES.map((u) => (
-                      <Pill key={u.v} selected={form.userType === u.v} onClick={() => set("userType", u.v)}>{u.l}</Pill>
+                      <Pill key={u.v} group="pill-usertype" selected={form.userType === u.v} onClick={() => set("userType", u.v)}>{u.l}</Pill>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {form.userType !== "" &&
                   (isStudent ? (
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <motion.div
+                      key="student-loc"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="grid gap-3 overflow-hidden sm:grid-cols-2"
+                    >
                       <input className={inputCls} placeholder="University" value={form.university} onChange={(e) => set("university", e.target.value)} required />
                       <input className={inputCls} placeholder="Campus / area" value={form.campusArea} onChange={(e) => set("campusArea", e.target.value)} />
-                    </div>
+                    </motion.div>
                   ) : (
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <motion.div
+                      key="city-loc"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="grid gap-3 overflow-hidden sm:grid-cols-2"
+                    >
                       <input className={inputCls} placeholder="City (e.g. Lagos)" value={form.city} onChange={(e) => set("city", e.target.value)} required />
                       <input className={inputCls} placeholder="Area (e.g. Yaba)" value={form.area} onChange={(e) => set("area", e.target.value)} />
-                    </div>
+                    </motion.div>
                   ))}
 
-                <div>
+                <motion.div variants={fieldVariants}>
                   <FieldLabel>What are you looking for?</FieldLabel>
                   <div className="flex flex-wrap gap-2">
                     {INTENTS.map((u) => (
-                      <Pill key={u.v} selected={form.intent === u.v} onClick={() => set("intent", u.v)}>{u.l}</Pill>
+                      <Pill key={u.v} group="pill-intent" selected={form.intent === u.v} onClick={() => set("intent", u.v)}>{u.l}</Pill>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div variants={fieldVariants}>
                   <FieldLabel>Approximate budget (per year)</FieldLabel>
                   <div className="flex flex-wrap gap-2">
                     {BUDGETS.map((u) => (
-                      <Pill key={u.v} selected={form.budget === u.v} onClick={() => set("budget", u.v)}>{u.l}</Pill>
+                      <Pill key={u.v} group="pill-budget" selected={form.budget === u.v} onClick={() => set("budget", u.v)}>{u.l}</Pill>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div variants={fieldVariants}>
                   <FieldLabel>When do you need it?</FieldLabel>
                   <div className="flex flex-wrap gap-2">
                     {TIMINGS.map((u) => (
-                      <Pill key={u.v} selected={form.moveInTiming === u.v} onClick={() => set("moveInTiming", u.v)}>{u.l}</Pill>
+                      <Pill key={u.v} group="pill-timing" selected={form.moveInTiming === u.v} onClick={() => set("moveInTiming", u.v)}>{u.l}</Pill>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div variants={fieldVariants}>
                   <FieldLabel>
                     How did you hear about Roomie? <span className="font-normal text-faint">(optional)</span>
                   </FieldLabel>
                   <div className="flex flex-wrap gap-2">
                     {SOURCES.map((s) => (
-                      <Pill key={s} selected={form.referralSource === s} onClick={() => set("referralSource", s)}>{s}</Pill>
+                      <Pill key={s} group="pill-source" selected={form.referralSource === s} onClick={() => set("referralSource", s)}>{s}</Pill>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {error && (
-                  <p className="rounded-xl bg-red-50 px-4 py-3 text-[14px] font-medium text-red-700">{error}</p>
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl bg-red-50 px-4 py-3 text-[14px] font-medium text-red-700"
+                  >
+                    {error}
+                  </motion.p>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="group flex w-full items-center justify-center gap-1.5 rounded-full bg-ink py-4 text-[15.5px] font-medium text-white transition hover:bg-ink/85 disabled:opacity-60"
-                >
-                  {status === "loading" ? (
-                    "Joining..."
-                  ) : (
-                    <>
-                      Join Roomie
-                      <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                    </>
-                  )}
-                </button>
-                <p className="text-center text-[12.5px] text-faint">
-                  By joining you agree to be contacted about early access.
-                </p>
-              </form>
+                <motion.div variants={fieldVariants}>
+                  <motion.button
+                    type="submit"
+                    disabled={status === "loading"}
+                    whileTap={{ scale: 0.98 }}
+                    className="group flex w-full items-center justify-center gap-2 rounded-full bg-ink py-4 text-[15.5px] font-medium text-white transition hover:bg-ink/85 disabled:opacity-60"
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 size={17} className="animate-spin" /> Joining...
+                      </>
+                    ) : (
+                      <>
+                        Join Roomie
+                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                      </>
+                    )}
+                  </motion.button>
+                  <p className="mt-3 text-center text-[12.5px] text-faint">
+                    By joining you agree to be contacted about early access.
+                  </p>
+                </motion.div>
+              </motion.form>
             </Reveal>
           </>
         )}

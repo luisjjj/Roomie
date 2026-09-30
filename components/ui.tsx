@@ -74,3 +74,25 @@ export function Tag({ children }: { children: ReactNode }) {
     </span>
   );
 }
+
+export function FloatCard({
+  children,
+  className,
+  lift = -6,
+}: {
+  children: ReactNode;
+  className?: string;
+  lift?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      whileHover={{ y: lift }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+    >
+      {children}
+    </motion.div>
+  );
+}

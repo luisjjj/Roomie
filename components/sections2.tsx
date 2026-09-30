@@ -20,7 +20,7 @@ import {
   UtensilsCrossed,
   VolumeX,
 } from "lucide-react";
-import { IconBadge, Reveal, SectionHead, Tag } from "./ui";
+import { IconBadge, FloatCard, Reveal, SectionHead, Tag } from "./ui";
 
 const profiles = [
   { icon: Briefcase, label: "Young professional", loc: "Lagos", budget: "₦800k–₦1.5m", tags: ["Works 9–5", "Quiet evenings", "Clean"], initial: "K" },
@@ -40,6 +40,7 @@ export function Everyone() {
         <div className="mt-12 grid gap-3 md:grid-cols-3">
           {profiles.map((p, i) => (
             <Reveal key={p.label} delay={i * 0.06}>
+              <FloatCard className="h-full transition-shadow duration-300 hover:shadow-frame">
               <div className="h-full rounded-2xl border border-hairline bg-white p-7">
                 <div className="flex items-center justify-between">
                   <IconBadge icon={p.icon} />
@@ -60,6 +61,7 @@ export function Everyone() {
                   ))}
                 </div>
               </div>
+              </FloatCard>
             </Reveal>
           ))}
         </div>
@@ -92,7 +94,8 @@ export function Compatibility() {
           title="It's more than “Do you have a room?”"
           copy="Two people can have the same budget and still be terrible roommates."
         />
-        <Reveal className="mt-12 overflow-hidden rounded-2xl border border-hairline">
+        <Reveal className="mt-12">
+          <FloatCard className="overflow-hidden rounded-2xl border border-hairline bg-white">
           <div className="grid sm:grid-cols-2">
             <div className="p-7">
               <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">You</p>
@@ -133,6 +136,7 @@ export function Compatibility() {
               </p>
             </div>
           </div>
+          </FloatCard>
         </Reveal>
         <p className="mt-4 text-center text-[13px] text-faint">
           No fake “97% compatibility” scores. Roomie is about conversation and informed decisions.

@@ -14,7 +14,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { IconBadge, Reveal, SectionHead, Tag } from "./ui";
+import { IconBadge, FloatCard, Reveal, SectionHead, Tag } from "./ui";
 import { track } from "@/lib/analytics";
 
 const withoutCards = [
@@ -52,12 +52,19 @@ export function Problem() {
               <button
                 key={t.v}
                 onClick={() => setTab(t.v)}
-                className={`flex items-center gap-1.5 rounded-full px-5 py-2 text-[14px] font-medium transition ${
-                  tab === t.v ? "bg-ink text-white shadow" : "text-muted hover:text-ink"
+                className={`relative flex items-center gap-1.5 rounded-full px-5 py-2 text-[14px] font-medium transition-colors ${
+                  tab === t.v ? "text-white" : "text-muted hover:text-ink"
                 }`}
               >
-                <t.icon size={14} strokeWidth={2.5} />
-                {t.label}
+                {tab === t.v && (
+                  <motion.span
+                    layoutId="problem-tab"
+                    className="absolute inset-0 rounded-full bg-ink"
+                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                  />
+                )}
+                <t.icon size={14} strokeWidth={2.5} className="relative z-10" />
+                <span className="relative z-10">{t.label}</span>
               </button>
             ))}
           </div>
@@ -189,6 +196,7 @@ export function University() {
           copy="Your first roommate. A new apartment. A new semester. A terrible previous roommate. Whatever brought you here, Roomie helps you find people looking for the same thing."
         />
         <Reveal className="mt-12">
+          <FloatCard>
           <div className="overflow-hidden rounded-2xl border border-hairline shadow-frame">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-6 py-5">
               <div className="flex items-center gap-3">
@@ -227,6 +235,7 @@ export function University() {
               ))}
             </div>
           </div>
+          </FloatCard>
           <p className="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
             Fictional preview
           </p>

@@ -29,6 +29,7 @@ function ProfileFrame() {
     <motion.div
       initial={reduce ? {} : { opacity: 0, y: 28 }}
       animate={reduce ? {} : { opacity: 1, y: 0 }}
+      whileHover={reduce ? {} : { y: -8 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="mx-auto w-full max-w-[560px]"
     >
@@ -105,18 +106,20 @@ function ProfileFrame() {
           </div>
 
           <div className="mt-4 flex gap-2">
-            <button
+            <motion.button
               type="button"
+              whileTap={{ scale: 0.96 }}
               className="flex flex-1 items-center justify-center gap-2 rounded-full border border-hairline py-3 text-[14px] font-medium"
             >
               <X size={16} /> Pass
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               type="button"
+              whileTap={{ scale: 0.96 }}
               className="flex flex-1 items-center justify-center gap-2 rounded-full bg-ink py-3 text-[14px] font-medium text-white"
             >
               <Heart size={16} /> Interested
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
