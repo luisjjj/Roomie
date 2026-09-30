@@ -1,11 +1,12 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
-import { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export function Reveal({
   children,
   delay = 0,
-  y = 24,
+  y = 20,
   className,
 }: {
   children: ReactNode;
@@ -20,44 +21,56 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-64px" }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
-export function Chip({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "accent" | "dark" }) {
-  const styles =
-    tone === "accent"
-      ? "bg-roomie-soft text-roomie-dark border-roomie/20"
-      : tone === "dark"
-      ? "bg-ink text-white border-ink"
-      : "bg-white text-ink border-black/10";
+export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-[12px] font-semibold leading-none ${styles}`}
-    >
+    <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-muted">
       {children}
-    </span>
+    </p>
   );
 }
 
-export function SectionHeading({
-  kicker,
+export function SectionHead({
+  eyebrow,
   title,
   copy,
 }: {
-  kicker: string;
-  title: string;
+  eyebrow: string;
+  title: ReactNode;
   copy?: string;
 }) {
   return (
     <Reveal className="mx-auto max-w-2xl text-center">
-      <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-roomie">{kicker}</p>
-      <h2 className="mt-3 text-3xl font-extrabold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">{title}</h2>
-      {copy ? <p className="mt-4 text-[16px] leading-relaxed text-muted">{copy}</p> : null}
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] sm:text-[44px]">
+        {title}
+      </h2>
+      {copy ? (
+        <p className="mx-auto mt-4 max-w-xl text-[16px] leading-relaxed text-muted">{copy}</p>
+      ) : null}
     </Reveal>
+  );
+}
+
+export function IconBadge({ icon: Icon }: { icon: LucideIcon }) {
+  return (
+    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink/[0.04]">
+      <Icon size={19} strokeWidth={1.8} className="text-ink" />
+    </span>
+  );
+}
+
+export function Tag({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-hairline bg-white px-3 py-1 text-[12.5px] font-medium text-ink">
+      {children}
+    </span>
   );
 }

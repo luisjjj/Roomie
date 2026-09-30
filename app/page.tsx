@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { Nav, Footer } from "@/components/chrome";
-import { Hero, SocialProof } from "@/components/hero";
+import { Hero, ProofStrip } from "@/components/hero";
 import { Problem, HowItWorks, University, StudentLife } from "@/components/sections1";
 import { Everyone, Compatibility, Awkward, Safety } from "@/components/sections2";
 import { Marketplace, Network, Waitlist } from "@/components/sections3";
@@ -32,10 +32,10 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-cream text-ink">
+    <main className="min-h-screen bg-white text-ink">
       <Nav />
       <Hero />
-      <SocialProof />
+      <ProofStrip />
       <Problem />
       <HowItWorks />
       <University />

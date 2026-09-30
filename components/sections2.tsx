@@ -1,34 +1,62 @@
 "use client";
-import { Reveal, SectionHeading, Chip } from "./ui";
+import {
+  Banknote,
+  BookOpen,
+  Briefcase,
+  Check,
+  Coffee,
+  EyeOff,
+  Flag,
+  KeyRound,
+  MapPin,
+  Minus,
+  Moon,
+  Music,
+  ShieldCheck,
+  Sparkles,
+  Truck,
+  Backpack,
+  Users,
+  UtensilsCrossed,
+  VolumeX,
+} from "lucide-react";
+import { IconBadge, Reveal, SectionHead, Tag } from "./ui";
+
+const profiles = [
+  { icon: Briefcase, label: "Young professional", loc: "Lagos", budget: "₦800k–₦1.5m", tags: ["Works 9–5", "Quiet evenings", "Clean"], initial: "K" },
+  { icon: Backpack, label: "NYSC member", loc: "Abuja", budget: "₦300k–₦500k", tags: ["Moving soon", "Shared flat", "Flexible"], initial: "S" },
+  { icon: Truck, label: "Relocating", loc: "Port Harcourt", budget: "Flexible", tags: ["Needs a place", "Low noise", "No smoking"], initial: "E" },
+];
 
 export function Everyone() {
-  const profiles = [
-    { tag: "Young professional", loc: "Lagos", budget: "₦800k–₦1.5m", lines: ["Works 9–5", "Quiet evenings", "Clean"], initial: "K", color: "bg-ink" },
-    { tag: "NYSC member", loc: "Abuja", budget: "₦300k–₦500k", lines: ["Moving soon", "Shared accommodation", "Flexible"], initial: "S", color: "bg-roomie" },
-    { tag: "Relocating", loc: "Port Harcourt", budget: "Flexible", lines: ["Needs accommodation", "Low noise", "No smoking"], initial: "E", color: "bg-leaf" },
-  ];
   return (
-    <section id="everyone" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading
-          kicker="Not just students"
+    <section id="everyone" className="border-t border-hairline bg-wash/60 py-24 sm:py-32">
+      <div className="mx-auto max-w-5xl px-5">
+        <SectionHead
+          eyebrow="Not just students"
           title="Not a student? Roomie is for you too."
-          copy="Roomie is also for young professionals, NYSC members, people relocating, and anyone who'd rather share a place than live alone."
+          copy="Young professionals, NYSC members, people relocating — anyone who'd rather share a place than live alone."
         />
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <div className="mt-12 grid gap-3 md:grid-cols-3">
           {profiles.map((p, i) => (
-            <Reveal key={p.tag} delay={i * 0.06}>
-              <div className="h-full rounded-3xl border border-black/5 bg-cream p-6">
-                <div className="flex items-center gap-3">
-                  <div className={`grid h-12 w-12 place-items-center rounded-xl text-lg font-black text-white ${p.color}`}>{p.initial}</div>
-                  <div>
-                    <p className="text-[13px] font-bold uppercase tracking-wider text-roomie">{p.tag}</p>
-                    <p className="font-extrabold">📍 {p.loc} • {p.budget}</p>
-                  </div>
+            <Reveal key={p.label} delay={i * 0.06}>
+              <div className="h-full rounded-2xl border border-hairline bg-white p-7">
+                <div className="flex items-center justify-between">
+                  <IconBadge icon={p.icon} />
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-ink/[0.05] text-[15px] font-semibold">
+                    {p.initial}
+                  </span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {p.lines.map((l) => (
-                    <Chip key={l}>{l}</Chip>
+                <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                  {p.label}
+                </p>
+                <p className="mt-1.5 flex items-center gap-1.5 text-[16px] font-semibold">
+                  <MapPin size={15} className="text-muted" /> {p.loc}
+                  <span className="font-mono text-[12px] font-normal text-muted">· {p.budget}</span>
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {p.tags.map((t) => (
+                    <Tag key={t}>{t}</Tag>
                   ))}
                 </div>
               </div>
@@ -40,44 +68,73 @@ export function Everyone() {
   );
 }
 
+const youRows = [
+  { icon: Moon, text: "Sleeps 10:30 PM" },
+  { icon: Sparkles, text: "Cleanliness: high" },
+  { icon: VolumeX, text: "Noise: low" },
+  { icon: Users, text: "Visitors: rarely" },
+  { icon: BookOpen, text: "Studies at home" },
+];
+const themRows = [
+  { icon: Moon, text: "Sleeps 11 PM" },
+  { icon: Sparkles, text: "Cleanliness: high" },
+  { icon: VolumeX, text: "Noise: low" },
+  { icon: Users, text: "Visitors: sometimes" },
+  { icon: BookOpen, text: "Studies at home" },
+];
+
 export function Compatibility() {
-  const you = ["🌙 Sleeps: 10:30 PM", "🧹 Cleanliness: High", "🔊 Noise: Low", "👥 Visitors: Rarely", "📚 Studies at home"];
-  const them = ["🌙 Sleeps: 11 PM", "🧹 Cleanliness: High", "🔊 Noise: Low", "👥 Visitors: Sometimes", "📚 Studies at home"];
   return (
-    <section className="py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHeading
-          kicker="Compatibility"
+    <section className="py-24 sm:py-32">
+      <div className="mx-auto max-w-4xl px-5">
+        <SectionHead
+          eyebrow="Compatibility"
           title="It's more than “Do you have a room?”"
           copy="Two people can have the same budget and still be terrible roommates."
         />
-        <Reveal className="mt-10 grid gap-4 rounded-[28px] border border-black/10 bg-white p-5 shadow-card sm:grid-cols-2 sm:p-7">
-          <div className="rounded-2xl bg-cream p-5">
-            <p className="font-extrabold">You</p>
-            <ul className="mt-3 space-y-2 text-[14.5px] font-medium">
-              {you.map((l) => (
-                <li key={l} className="rounded-xl bg-white px-3 py-2">{l}</li>
-              ))}
-            </ul>
+        <Reveal className="mt-12 overflow-hidden rounded-2xl border border-hairline">
+          <div className="grid sm:grid-cols-2">
+            <div className="p-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">You</p>
+              <ul className="mt-4 space-y-3">
+                {youRows.map((r) => (
+                  <li key={r.text} className="flex items-center gap-2.5 text-[14.5px]">
+                    <r.icon size={16} strokeWidth={1.8} className="text-ink/50" /> {r.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="border-t border-hairline bg-wash/60 p-7 sm:border-l sm:border-t-0">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                Them · Preview
+              </p>
+              <ul className="mt-4 space-y-3">
+                {themRows.map((r) => (
+                  <li key={r.text} className="flex items-center gap-2.5 text-[14.5px]">
+                    <r.icon size={16} strokeWidth={1.8} className="text-ink/50" /> {r.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="rounded-2xl bg-cream p-5">
-            <p className="font-extrabold">Them <span className="ml-1 text-[11px] font-bold text-muted">(preview)</span></p>
-            <ul className="mt-3 space-y-2 text-[14.5px] font-medium">
-              {them.map((l) => (
-                <li key={l} className="rounded-xl bg-white px-3 py-2">{l}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-green-50 p-5">
-            <p className="font-bold text-green-800">You agree on</p>
-            <p className="mt-1 text-[14.5px] font-medium text-green-900">✓ Quiet nights • ✓ Clean spaces • ✓ Similar routines</p>
-          </div>
-          <div className="rounded-2xl bg-amber-50 p-5">
-            <p className="font-bold text-amber-800">Talk about</p>
-            <p className="mt-1 text-[14.5px] font-medium text-amber-900">• Visitors • Cooking • Shared expenses</p>
+          <div className="grid border-t border-hairline sm:grid-cols-2">
+            <div className="flex items-start gap-3 p-6">
+              <Check size={17} strokeWidth={2.5} className="mt-0.5 shrink-0" />
+              <p className="text-[14px] leading-relaxed">
+                <span className="font-medium">You agree on</span>
+                <span className="text-muted"> — quiet nights, clean spaces, similar routines.</span>
+              </p>
+            </div>
+            <div className="flex items-start gap-3 border-t border-hairline p-6 sm:border-l sm:border-t-0">
+              <Minus size={17} strokeWidth={2.5} className="mt-0.5 shrink-0 text-accent" />
+              <p className="text-[14px] leading-relaxed">
+                <span className="font-medium">Talk about</span>
+                <span className="text-muted"> — visitors, cooking, shared expenses.</span>
+              </p>
+            </div>
           </div>
         </Reveal>
-        <p className="mt-4 text-center text-[13px] text-muted">
+        <p className="mt-4 text-center text-[13px] text-faint">
           No fake “97% compatibility” scores. Roomie is about conversation and informed decisions.
         </p>
       </div>
@@ -85,28 +142,32 @@ export function Compatibility() {
   );
 }
 
+const questions = [
+  { icon: Users, label: "Visitors", q: "“What happens when someone wants to bring a friend over?”" },
+  { icon: Sparkles, label: "Cleaning", q: "“What does 'clean' actually mean to both of you?”" },
+  { icon: Banknote, label: "Money", q: "“How are electricity, Wi-Fi and shared expenses handled?”" },
+  { icon: KeyRound, label: "Moving out", q: "“What happens if one person needs to leave early?”" },
+  { icon: Music, label: "Noise", q: "“How late is too late for music?”" },
+  { icon: UtensilsCrossed, label: "Food", q: "“Are we cooking together or minding our business?”" },
+];
+
 export function Awkward() {
-  const cards = [
-    { t: "Visitors", q: "“What happens when someone wants to bring a friend over?”" },
-    { t: "Cleaning", q: "“What does 'clean' actually mean to both of you?”" },
-    { t: "Money", q: "“How are electricity, Wi-Fi and shared expenses handled?”" },
-    { t: "Moving out", q: "“What happens if one person needs to leave early?”" },
-    { t: "Noise", q: "“How late is too late for music?”" },
-    { t: "Food", q: "“Are we cooking together or minding our business?”" },
-  ];
   return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading
-          kicker="Real talk"
+    <section className="border-t border-hairline bg-wash/60 py-24 sm:py-32">
+      <div className="mx-auto max-w-5xl px-5">
+        <SectionHead
+          eyebrow="Real talk"
           title="Before you sign the lease, talk about the awkward stuff."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((c, i) => (
-            <Reveal key={c.t} delay={(i % 3) * 0.06}>
-              <div className="h-full rounded-3xl bg-ink p-6 text-white">
-                <p className="text-[12px] font-bold uppercase tracking-widest text-amber-300">{c.t}</p>
-                <p className="mt-2 text-[17px] font-bold leading-snug">{c.q}</p>
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {questions.map((c, i) => (
+            <Reveal key={c.label} delay={(i % 3) * 0.06}>
+              <div className="h-full rounded-2xl border border-hairline bg-white p-6">
+                <IconBadge icon={c.icon} />
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                  {c.label}
+                </p>
+                <p className="mt-1.5 text-[15.5px] font-medium leading-snug">{c.q}</p>
               </div>
             </Reveal>
           ))}
@@ -116,27 +177,29 @@ export function Awkward() {
   );
 }
 
+const safety = [
+  { icon: ShieldCheck, title: "Identity verification", desc: "Phone verification and, where practical, university verification." },
+  { icon: EyeOff, title: "Privacy controls", desc: "Don't expose exact addresses publicly. Share details when you choose to." },
+  { icon: Flag, title: "Report & block", desc: "Report suspicious or inappropriate behaviour. Bad actors get removed." },
+  { icon: Coffee, title: "Meet in public first", desc: "Meet in a public place and tell someone where you're going." },
+];
+
 export function Safety() {
-  const items = [
-    { t: "Identity verification", d: "Phone verification and, where practical, university verification." },
-    { t: "Privacy controls", d: "Don't expose exact addresses publicly. Share details when you choose to." },
-    { t: "Report & block", d: "Users can report suspicious or inappropriate behaviour." },
-    { t: "Safer conversations", d: "Meet in public places first. Tell someone where you're going." },
-  ];
   return (
-    <section id="safety" className="py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading
-          kicker="Safety"
+    <section id="safety" className="py-24 sm:py-32">
+      <div className="mx-auto max-w-5xl px-5">
+        <SectionHead
+          eyebrow="Safety"
           title="Find people. Keep your boundaries."
-          copy="Verification and moderation can reduce risk, but users should still use their own judgment when communicating or meeting someone."
+          copy="Verification and moderation can reduce risk — but please still use your own judgment when communicating or meeting someone."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((s, i) => (
-            <Reveal key={s.t} delay={i * 0.06}>
-              <div className="h-full rounded-3xl border border-black/5 bg-white p-6 shadow-card">
-                <p className="font-extrabold">{s.t}</p>
-                <p className="mt-2 text-[14.5px] text-muted">{s.d}</p>
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {safety.map((s, i) => (
+            <Reveal key={s.title} delay={i * 0.06}>
+              <div className="h-full rounded-2xl border border-hairline p-6">
+                <IconBadge icon={s.icon} />
+                <p className="mt-4 font-semibold">{s.title}</p>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-muted">{s.desc}</p>
               </div>
             </Reveal>
           ))}

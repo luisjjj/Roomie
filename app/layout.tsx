@@ -25,14 +25,12 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "Roomie",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Roomie preview" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Roomie — Find someone you'll actually enjoy living with",
     description:
       "Compatible roommates based on lifestyle, budget and location. Early access now open in Nigeria.",
-    images: ["/og.png"],
   },
   icons: { icon: "/favicon.svg" },
   robots: { index: true, follow: true },
@@ -42,10 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-NG">
       <head>
+        <meta name="theme-color" content="#ffffff" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

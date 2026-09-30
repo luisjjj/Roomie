@@ -9,28 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FFFBF4",
-        sand: "#F6EEE1",
-        ink: "#181410",
-        muted: "#6B6259",
-        roomie: {
+        ink: "#0A0A0A",
+        muted: "#6E6E73",
+        faint: "#AEAEB2",
+        hairline: "#E9E9EC",
+        wash: "#F5F5F7",
+        accent: {
           DEFAULT: "#FF4D24",
           dark: "#D63A15",
-          soft: "#FFE9E1",
-          deep: "#1E2B25",
+          soft: "#FFF1EC",
         },
-        leaf: "#0E3B2E",
-        card: "#FFFFFF",
       },
       fontFamily: {
-        sans: ["var(--font-roomie)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"SF Pro Display"',
+          '"SF Pro Text"',
+          "Inter",
+          '"Segoe UI"',
+          "sans-serif",
+        ],
+        mono: [
+          "ui-monospace",
+          '"SF Mono"',
+          "SFMono-Regular",
+          '"Geist Mono"',
+          "Menlo",
+          "monospace",
+        ],
       },
       boxShadow: {
-        card: "0 12px 32px -12px rgba(24,20,16,0.18)",
-        pop: "0 8px 24px -8px rgba(255,77,36,0.45)",
-      },
-      borderRadius: {
-        xl2: "1.4rem",
+        frame: "0 24px 64px -24px rgba(0,0,0,0.18)",
+        card: "0 1px 2px rgba(0,0,0,0.04), 0 12px 32px -16px rgba(0,0,0,0.12)",
       },
     },
   },
