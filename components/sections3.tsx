@@ -54,7 +54,7 @@ export function Marketplace() {
           ))}
         </div>
         <p className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
-          Illustrative previews — not real listings
+          Illustrative previews · not real listings
         </p>
       </div>
     </section>

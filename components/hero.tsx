@@ -38,7 +38,7 @@ function ProfileFrame() {
           <span className="h-2.5 w-2.5 rounded-full bg-ink/10" />
           <span className="h-2.5 w-2.5 rounded-full bg-ink/10" />
           <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
-            Roomie — Preview
+            Roomie · Preview
           </span>
         </div>
 
@@ -136,7 +136,7 @@ export function Hero() {
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-[16.5px] leading-relaxed text-muted sm:text-[18px]">
           Roomie helps you find compatible roommates based on your lifestyle, budget,
-          location and accommodation needs — not just who happens to have a spare room.
+          location and accommodation needs. Not just who happens to have a spare room.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a

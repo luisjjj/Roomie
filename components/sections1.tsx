@@ -25,7 +25,7 @@ const withoutCards = [
 ];
 
 const withRows = [
-  { title: "See the person, not just the room", desc: "Sleep schedule, cleanliness, noise, visitors — up front." },
+  { title: "See the person, not just the room", desc: "Sleep schedule, cleanliness, noise and visitors, up front." },
   { title: "Match on budget and habits", desc: "Compatible ranges and routines, filtered around you." },
   { title: "Talk before you move in", desc: "Chat first. No surprises on resumption day." },
 ];

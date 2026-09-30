@@ -4,7 +4,7 @@ import "./globals.css";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://roomie.ng";
 
 export const metadata: Metadata = {
-  title: "Roomie — Find someone you'll actually enjoy living with",
+  title: "Roomie | Find someone you'll actually enjoy living with",
   description:
     "Roomie helps Nigerians find compatible roommates based on lifestyle, budget, location and accommodation needs. For students, NYSC members, young professionals and anyone sharing a place. Join early access.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Roomie — Find someone you'll actually enjoy living with",
+    title: "Roomie | Find someone you'll actually enjoy living with",
     description:
       "Stop gambling with random roommates. Match on lifestyle, budget and habits. Built for Nigerian students, NYSC members and young professionals.",
     url: siteUrl,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Roomie — Find someone you'll actually enjoy living with",
+    title: "Roomie | Find someone you'll actually enjoy living with",
     description:
       "Compatible roommates based on lifestyle, budget and location. Early access now open in Nigeria.",
   },

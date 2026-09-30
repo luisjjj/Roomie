@@ -35,7 +35,7 @@ export function Everyone() {
         <SectionHead
           eyebrow="Not just students"
           title="Not a student? Roomie is for you too."
-          copy="Young professionals, NYSC members, people relocating — anyone who'd rather share a place than live alone."
+          copy="Young professionals, NYSC members, people relocating. Anyone who'd rather share a place than live alone."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-3">
           {profiles.map((p, i) => (
@@ -122,14 +122,14 @@ export function Compatibility() {
               <Check size={17} strokeWidth={2.5} className="mt-0.5 shrink-0" />
               <p className="text-[14px] leading-relaxed">
                 <span className="font-medium">You agree on</span>
-                <span className="text-muted"> — quiet nights, clean spaces, similar routines.</span>
+                <span className="text-muted">: quiet nights, clean spaces, similar routines.</span>
               </p>
             </div>
             <div className="flex items-start gap-3 border-t border-hairline p-6 sm:border-l sm:border-t-0">
               <Minus size={17} strokeWidth={2.5} className="mt-0.5 shrink-0 text-accent" />
               <p className="text-[14px] leading-relaxed">
                 <span className="font-medium">Talk about</span>
-                <span className="text-muted"> — visitors, cooking, shared expenses.</span>
+                <span className="text-muted">: visitors, cooking, shared expenses.</span>
               </p>
             </div>
           </div>
@@ -191,7 +191,7 @@ export function Safety() {
         <SectionHead
           eyebrow="Safety"
           title="Find people. Keep your boundaries."
-          copy="Verification and moderation can reduce risk — but please still use your own judgment when communicating or meeting someone."
+          copy="Verification and moderation can reduce risk. But please still use your own judgment when communicating or meeting someone."
         />
         <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {safety.map((s, i) => (
